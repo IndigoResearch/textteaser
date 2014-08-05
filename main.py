@@ -17,7 +17,10 @@ def getInput():
 input = getInput()
 
 parser = Parser()
+sentences = parser.splitSentences(input['text'])
 
-for sentence in parser.splitSentences(input['text']):
+for i, sentence in enumerate(sentences):
   print sentence
-  print parser.getSentenceLengthScore(sentence)
+  print i
+  # print parser.getSentenceLengthScore(sentence)
+  print parser.getSentencePositionScore(i, len(sentences))
