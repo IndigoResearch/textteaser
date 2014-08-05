@@ -1,0 +1,16 @@
+It’s Official: Square Acquires Food Delivery Service Caviar
+Square has acquired curated food delivery service Caviar today, confirming earlier reports that the companies had been in serious talks.
+
+We reported last month that the companies were in talks on a deal worth about $100 million. Both Re/Code and The New York Times reported the deal would take place this week, but the reported price now is for $90 million in stock.
+
+We’ve reached out to both Square and Caviar, but both companies say they are not disclosing the terms of the agreement. We’ll update if we learn more.
+
+Caviar is one of many new startups that seeks to enable customers to order meals online and have them delivered in a short period of time. The difference is most other food-delivery services tap into an already built-in delivery infrastructure. Caviar provides delivery to restaurants that don’t already offer such a service. Caviar would be able to provide Square, which launched food ordering service Square Order earlier this year, with a way to deliver food from restaurants that don’t already offer the service to surrounding locals.
+
+The food ordering app from Square has only been able to allow users to order food for pickup. The payments company has been on the lookout for something that could bridge the gap between orders and delivery. Caviar has the infrastructure to do that for the app.
+
+The acquisition also fits neatly into Square’s other restaurant offerings. Square recently released inventory tracking, an invoicing service and point-of-sale software to its 50,000 restaurants that already use its register service.
+
+However, this is a quick turnabout for Caviar. It raised a $13 million round only this April. It should be noted that food delivery has seen a lot of funding from investors of late.
+
+In recent months, we’ve seen Munchery raise $28 million, Postmates raise $16 million, and SpoonRocket and Sprig each raise about $10 million. Food delivery is also a crowded space. It may have made more sense for Caviar to sell rather than handle a competitive environment on its own.
