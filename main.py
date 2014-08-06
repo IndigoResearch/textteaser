@@ -28,4 +28,10 @@ for i, sentence in enumerate(sentences):
   # print i
   # print parser.getSentenceLengthScore(sentence)
   # print parser.getSentencePositionScore(i, len(sentences))
-  print parser.getTitleScore(title, sentence)
+  # print parser.getTitleScore(title, sentence)
+  parser.getKeywords(sentence)
+
+keywords = sorted(parser.keywords, key = lambda x: -x['count'])
+
+for keyword in keywords:
+  print keyword

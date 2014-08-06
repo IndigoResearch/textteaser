@@ -4,6 +4,23 @@ class Parser:
   def __init__(self):
     self.ideal = 20.0
     self.stopWords = self.getStopWords()
+    self.keywords = []
+
+  def getKeywords(self, text):
+    words = self.removeStopWords(text)
+
+    for word in words:
+      # kwords = [word['word'] for word in self.keywords if 'word' in word]
+
+      kwords = [keyword['word'] for keyword in self.keywords]
+
+      if word not in kwords:
+        self.keywords.append({'word': word, 'count': 1})
+      else:
+        wordMap = [keyword for keyword in self.keywords if keyword['word'] == word][0]
+        wordMap['count'] += 1
+
+    # print self.keywords
 
   def getSentenceLengthScore(self, sentence):
     return (self.ideal - abs(self.ideal - len(sentence))) / self.ideal
