@@ -9,6 +9,11 @@ class Summarizer:
     titleWords = self.parser.removePunctations(title)
     titleWords = self.parser.splitWords(title)
 
+    # Adding keywords in the keyword variable
     [self.parser.getKeywords(sentence) for sentence in sentences]
 
-    print self.parser.keywords
+    topKeywords = getTopKeywords(self.parser.keywords[:10])
+
+  def getTopKeywords(keywords):
+    # Add getting top keywords in the database here
+    return keywords
