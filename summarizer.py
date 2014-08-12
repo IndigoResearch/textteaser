@@ -12,8 +12,8 @@ class Summarizer:
     # Adding keywords in the keyword variable
     [self.parser.getKeywords(sentence) for sentence in sentences]
 
-    topKeywords = getTopKeywords(self.parser.keywords[:10])
+    topKeywords = self.getTopKeywords(self.parser.keywords[:10])
 
-  def getTopKeywords(keywords):
+  def getTopKeywords(self, keywords):
     # Add getting top keywords in the database here
     return keywords
