@@ -8,12 +8,21 @@ class Summarizer:
     sentences = self.parser.splitSentences(text)
     titleWords = self.parser.removePunctations(title)
     titleWords = self.parser.splitWords(title)
+    (keywords, wordCount) = self.parser.getKeywords(text)
 
-    # Adding keywords in the keyword variable
-    [self.parser.getKeywords(sentence) for sentence in sentences]
+    topKeywords = self.getTopKeywords(keywords[:10], wordCount, source, category)
 
-    topKeywords = self.getTopKeywords(self.parser.keywords[:10])
+    result = self.computeScore(sentences, titleWords, topKeywords)
 
-  def getTopKeywords(self, keywords):
+  def getTopKeywords(self, keywords, wordCount, source, category):
     # Add getting top keywords in the database here
     return keywords
+
+  def computeScore(self, sentences, titleWords, topKeywords):
+    None
+
+  def sbs(sentence, topKeywords):
+    None
+
+  def dbs(sentence, topKeywords):
+    None
