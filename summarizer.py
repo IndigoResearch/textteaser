@@ -19,10 +19,32 @@ class Summarizer:
     return keywords
 
   def computeScore(self, sentences, titleWords, topKeywords):
-    None
+    keywordList = [keyword['word'] for keyword in topKeywords]
 
-  def sbs(sentence, topKeywords):
-    None
+    for sentence in sentences:
+      sbsFeature = self.sbs(sentence, topKeywords, keywordList)
 
-  def dbs(sentence, topKeywords):
+      print sbsFeature
+
+  def sbs(self, sentence, topKeywords, keywordList):
+    sentence = self.parser.removePunctations(sentence)
+    words = self.parser.splitWords(sentence)
+    score = 0.0
+
+    if len(words) == 0:
+      return 0
+
+    for word in words:
+      word = word.lower()
+      index = -1
+
+      if word in keywordList:
+        index = keywordList.index(word)
+
+      if index > -1:
+        score += topKeywords[index]['count']
+
+    return 1.0 / abs(len(words)) * score
+
+  def dbs(self, sentence, topKeywords):
     None
