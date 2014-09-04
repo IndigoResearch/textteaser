@@ -14,6 +14,8 @@ class Summarizer:
 
     result = self.computeScore(sentences, titleWords, topKeywords)
 
+    return result
+
   def getTopKeywords(self, keywords, wordCount, source, category):
     # Add getting top keywords in the database here
     for keyword in keywords:
@@ -22,18 +24,39 @@ class Summarizer:
 
     return keywords
 
+  def sortScore(self, dictList):
+    return sorted(dictList, key = lambda x: -x['totalScore'])
+
+  def sortSentences(self, dictList):
+    return sorted(dictList, key = lambda x: x['order'])
+
   def computeScore(self, sentences, titleWords, topKeywords):
     keywordList = [keyword['word'] for keyword in topKeywords]
+    summaries = []
 
-    for sentence in sentences:
-      sentence = self.parser.removePunctations(sentence)
-      words = self.parser.splitWords(sentence)
+    for i, sentence in enumerate(sentences):
+      sent = self.parser.removePunctations(sentence)
+      words = self.parser.splitWords(sent)
 
       sbsFeature = self.sbs(words, topKeywords, keywordList)
       dbsFeature = self.dbs(words, topKeywords, keywordList)
 
-      print 'sbs: %f' % sbsFeature
-      print 'dbs: %f' % dbsFeature
+      titleFeature = self.parser.getTitleScore(titleWords, words)
+      sentenceLength = self.parser.getSentenceLengthScore(words)
+      sentencePosition = self.parser.getSentencePositionScore(i, len(sentences))
+      keywordFrequency = (sbsFeature + dbsFeature) / 2.0 * 10.0
+      totalScore = (titleFeature * 1.5 + keywordFrequency * 2.0 + sentenceLength * 0.5 + sentencePosition * 1.0) / 4.0
+
+      summaries.append({
+        # 'titleFeature': titleFeature,
+        # 'sentenceLength': sentenceLength,
+        # 'sentencePosition': sentencePosition,
+        # 'keywordFrequency': keywordFrequency,
+        'totalScore': totalScore,
+        'sentence': sentence,
+        'order': i})
+
+    return summaries
 
   def sbs(self, words, topKeywords, keywordList):
     score = 0.0

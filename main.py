@@ -9,7 +9,7 @@ def getInput():
   content = [c.replace('\n', '') for c in content if c != '\n']
 
   title = content[0]
-  text = content[1:-1]
+  text = content[-(len(content) - 1):]
 
   return {'title': title, 'text': ' '.join(text)}
 
@@ -38,4 +38,13 @@ input = getInput()
 #   print keyword
 
 summarizer = Summarizer()
-summarizer.summarize(input['text'], input['title'], 'Undefined', 'Undefined')
+result = summarizer.summarize(input['text'], input['title'], 'Undefined', 'Undefined')
+result = summarizer.sortScore(result)
+result = summarizer.sortSentences(result[:10])
+
+print 'Summary:'
+
+for r in result:
+  print r['sentence']
+  # print r['totalScore']
+  # print r['order']
