@@ -17,26 +17,6 @@ def getInput():
 
 input = getInput()
 
-# parser = Parser()
-# sentences = parser.splitSentences(input['text'])
-# title = input['title']
-# title = parser.removePunctations(title)
-# title = parser.splitWords(title)
-
-# for i, sentence in enumerate(sentences):
-#   sentence = parser.removePunctations(sentence)
-#   sentence = parser.splitWords(sentence)
-#   parser.getKeywords(sentence)
-
-#   print parser.getSentenceLengthScore(sentence)
-#   print parser.getSentencePositionScore(i, len(sentences))
-#   print parser.getTitleScore(title, sentence)
-
-# keywords = sorted(parser.keywords, key = lambda x: -x['count'])
-
-# for keyword in keywords:
-#   print keyword
-
 summarizer = Summarizer()
 result = summarizer.summarize(input['text'], input['title'], 'Undefined', 'Undefined')
 result = summarizer.sortScore(result)
