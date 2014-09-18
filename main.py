@@ -16,11 +16,14 @@ def getInput():
 # #####################
 
 input = getInput()
+input['text'] = input['text'].decode("ascii", "ignore")
+
+# print input['text'].replace("\n", " ") # .replace("   ", " ").replace("  ", " ")
 
 summarizer = Summarizer()
 result = summarizer.summarize(input['text'], input['title'], 'Undefined', 'Undefined')
 result = summarizer.sortScore(result)
-result = summarizer.sortSentences(result[:10])
+result = summarizer.sortSentences(result[:30])
 
 print 'Summary:'
 
