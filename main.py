@@ -18,7 +18,7 @@ def getInput():
 input = getInput()
 input['text'] = input['text'].decode("ascii", "ignore")
 
-# print input['text'].replace("\n", " ") # .replace("   ", " ").replace("  ", " ")
+input['text'] = " ".join(input['text'].replace("\n", " ").split())
 
 summarizer = Summarizer()
 result = summarizer.summarize(input['text'], input['title'], 'Undefined', 'Undefined')
