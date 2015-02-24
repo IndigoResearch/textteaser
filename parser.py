@@ -1,4 +1,5 @@
 import nltk.data
+import os
 
 class Parser:
   def __init__(self):
@@ -54,7 +55,7 @@ class Parser:
     return len(matchedWords) / (len(title) * 1.0)
 
   def splitSentences(self, text):
-    tokenizer = nltk.data.load('file:trainer/english.pickle')
+    tokenizer = nltk.data.load('file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle')
 
     return tokenizer.tokenize(text)
 
@@ -68,7 +69,7 @@ class Parser:
     return [word for word in words if word not in self.stopWords]
 
   def getStopWords(self):
-    with open('trainer/stopWords.txt') as file:
+    with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stopWords.txt') as file:
       words = file.readlines()
 
     return [word.replace('\n', '') for word in words]
