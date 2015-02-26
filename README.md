@@ -1,6 +1,6 @@
-textteaser.py
+TextTeaser
 =============
 
-Official Python version of TextTeaser.
+TextTeaser is now part of [DataTeaser](http://www.datateaser.com/?textteaser).
 
-Soon.
+Future developments can be seen in the [DataTeaser's fork of TextTeaser](https://github.com/DataTeaser/textteaser_py).
