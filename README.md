@@ -1,6 +1,8 @@
 TextTeaser
 =============
 
-TextTeaser is now part of [DataTeaser](http://www.datateaser.com/?textteaser).
+This is now the official version of TextTeaser. Future developments can be seen in this repository.
 
-Future developments can be seen in the [DataTeaser's fork of TextTeaser](https://github.com/DataTeaser/textteaser_py).
+### Commercial Support
+
+Commercial support for TextTeaser or custom summarizers can be provided by [DataTeaser](http://www.datateaser.com/?textteaser).
