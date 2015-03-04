@@ -18,6 +18,8 @@ The original Scala TextTeaser can still be accessed [here](https://github.com/Mo
     >>> tt = TextTeaser()
     >>> tt.summarize(title, text)
 
+You can also test TextTeaser by running `python test.py`.
+
 ### Commercial Support
 
 Commercial support for TextTeaser or custom summarizers can be provided by [DataTeaser](http://www.datateaser.com/?textteaser).

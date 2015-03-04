@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from parser import Parser
 
 class Summarizer:
@@ -13,6 +16,7 @@ class Summarizer:
     topKeywords = self.getTopKeywords(keywords[:10], wordCount, source, category)
 
     result = self.computeScore(sentences, titleWords, topKeywords)
+    result = self.sortScore(result)
 
     return result
 
@@ -48,13 +52,14 @@ class Summarizer:
       totalScore = (titleFeature * 1.5 + keywordFrequency * 2.0 + sentenceLength * 0.5 + sentencePosition * 1.0) / 4.0
 
       summaries.append({
-        # 'titleFeature': titleFeature,
-        # 'sentenceLength': sentenceLength,
-        # 'sentencePosition': sentencePosition,
-        # 'keywordFrequency': keywordFrequency,
-        'totalScore': totalScore,
-        'sentence': sentence,
-        'order': i})
+          # 'titleFeature': titleFeature,
+          # 'sentenceLength': sentenceLength,
+          # 'sentencePosition': sentencePosition,
+          # 'keywordFrequency': keywordFrequency,
+          'totalScore': totalScore,
+          'sentence': sentence,
+          'order': i
+        })
 
     return summaries
 
