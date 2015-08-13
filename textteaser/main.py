@@ -1,17 +1,17 @@
-from parser import Parser
 from summarizer import Summarizer
 
+
 def getInput():
-  with open('input.txt') as file:
-    content = file.readlines()
+    with open('input.txt') as file:
+        content = file.readlines()
 
-  # remove unnecessary \n
-  content = [c.replace('\n', '') for c in content if c != '\n']
+    # remove unnecessary \n
+    content = [c.replace('\n', '') for c in content if c != '\n']
 
-  title = content[0]
-  text = content[-(len(content) - 1):]
+    title = content[0]
+    text = content[-(len(content) - 1):]
 
-  return {'title': title, 'text': ' '.join(text)}
+    return {'title': title, 'text': ' '.join(text)}
 
 # #####################
 
@@ -28,6 +28,6 @@ result = summarizer.sortSentences(result[:30])
 print 'Summary:'
 
 for r in result:
-  print r['sentence']
-  # print r['totalScore']
-  # print r['order']
+    print r['sentence']
+    # print r['totalScore']
+    # print r['order']

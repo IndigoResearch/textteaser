@@ -1,104 +1,104 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from parser import Parser
 
+
 class Summarizer:
-  def __init__(self):
-    self.parser = Parser()
+    def __init__(self):
+        self.parser = Parser()
 
-  def summarize(self, text, title, source, category):
-    sentences = self.parser.splitSentences(text)
-    titleWords = self.parser.removePunctations(title)
-    titleWords = self.parser.splitWords(title)
-    (keywords, wordCount) = self.parser.getKeywords(text)
+    def summarize(self, text, title, source, category):
+        sentences = self.parser.splitSentences(text)
+        titleWords = self.parser.removePunctations(title)
+        titleWords = self.parser.splitWords(title)
+        (keywords, wordCount) = self.parser.getKeywords(text)
 
-    topKeywords = self.getTopKeywords(keywords[:10], wordCount, source, category)
+        topKeywords = self.getTopKeywords(keywords[:10], wordCount, source, category)
 
-    result = self.computeScore(sentences, titleWords, topKeywords)
-    result = self.sortScore(result)
+        result = self.computeScore(sentences, titleWords, topKeywords)
+        result = self.sortScore(result)
 
-    return result
+        return result
 
-  def getTopKeywords(self, keywords, wordCount, source, category):
-    # Add getting top keywords in the database here
-    for keyword in keywords:
-      articleScore = 1.0 * keyword['count'] / wordCount
-      keyword['totalScore'] = articleScore * 1.5
+    def getTopKeywords(self, keywords, wordCount, source, category):
+        # Add getting top keywords in the database here
+        for keyword in keywords:
+            articleScore = 1.0 * keyword['count'] / wordCount
+            keyword['totalScore'] = articleScore * 1.5
 
-    return keywords
+        return keywords
 
-  def sortScore(self, dictList):
-    return sorted(dictList, key = lambda x: -x['totalScore'])
+    def sortScore(self, dictList):
+        return sorted(dictList, key=lambda x: -x['totalScore'])
 
-  def sortSentences(self, dictList):
-    return sorted(dictList, key = lambda x: x['order'])
+    def sortSentences(self, dictList):
 
-  def computeScore(self, sentences, titleWords, topKeywords):
-    keywordList = [keyword['word'] for keyword in topKeywords]
-    summaries = []
+        return sorted(dictList, key=lambda x: x['order'])
 
-    for i, sentence in enumerate(sentences):
-      sent = self.parser.removePunctations(sentence)
-      words = self.parser.splitWords(sent)
+    def computeScore(self, sentences, titleWords, topKeywords):
+        keywordList = [keyword['word'] for keyword in topKeywords]
+        summaries = []
 
-      sbsFeature = self.sbs(words, topKeywords, keywordList)
-      dbsFeature = self.dbs(words, topKeywords, keywordList)
+        for i, sentence in enumerate(sentences):
+            sent = self.parser.removePunctations(sentence)
+            words = self.parser.splitWords(sent)
 
-      titleFeature = self.parser.getTitleScore(titleWords, words)
-      sentenceLength = self.parser.getSentenceLengthScore(words)
-      sentencePosition = self.parser.getSentencePositionScore(i, len(sentences))
-      keywordFrequency = (sbsFeature + dbsFeature) / 2.0 * 10.0
-      totalScore = (titleFeature * 1.5 + keywordFrequency * 2.0 + sentenceLength * 0.5 + sentencePosition * 1.0) / 4.0
+            sbsFeature = self.sbs(words, topKeywords, keywordList)
+            dbsFeature = self.dbs(words, topKeywords, keywordList)
 
-      summaries.append({
-          # 'titleFeature': titleFeature,
-          # 'sentenceLength': sentenceLength,
-          # 'sentencePosition': sentencePosition,
-          # 'keywordFrequency': keywordFrequency,
-          'totalScore': totalScore,
-          'sentence': sentence,
-          'order': i
-        })
+            titleFeature = self.parser.getTitleScore(titleWords, words)
+            sentenceLength = self.parser.getSentenceLengthScore(words)
+            sentencePosition = self.parser.getSentencePositionScore(i, len(sentences))
+            keywordFrequency = (sbsFeature + dbsFeature) / 2.0 * 10.0
+            totalScore = (titleFeature * 1.5 + keywordFrequency * 2.0 + sentenceLength * 0.5 + sentencePosition * 1.0) / 4.0
 
-    return summaries
+            summaries.append({
+                # 'titleFeature': titleFeature,
+                # 'sentenceLength': sentenceLength,
+                # 'sentencePosition': sentencePosition,
+                # 'keywordFrequency': keywordFrequency,
+                'totalScore': totalScore,
+                'sentence': sentence,
+                'order': i
+            })
 
-  def sbs(self, words, topKeywords, keywordList):
-    score = 0.0
+        return summaries
 
-    if len(words) == 0:
-      return 0
+    def sbs(self, words, topKeywords, keywordList):
+        score = 0.0
 
-    for word in words:
-      word = word.lower()
-      index = -1
+        if len(words) == 0:
+            return 0
 
-      if word in keywordList:
-        index = keywordList.index(word)
+        for word in words:
+            word = word.lower()
+            index = -1
 
-      if index > -1:
-        score += topKeywords[index]['totalScore']
+        if word in keywordList:
+            index = keywordList.index(word)
 
-    return 1.0 / abs(len(words)) * score
+        if index > -1:
+            score += topKeywords[index]['totalScore']
 
-  def dbs(self, words, topKeywords, keywordList):
-    k = len(list(set(words) & set(keywordList))) + 1
-    summ = 0.0
-    firstWord = {}
-    secondWord = {}
+        return 1.0 / abs(len(words)) * score
 
-    for i, word in enumerate(words):
-      if word in keywordList:
-        index = keywordList.index(word)
+    def dbs(self, words, topKeywords, keywordList):
+        k = len(list(set(words) & set(keywordList))) + 1
+        summ = 0.0
+        firstWord = {}
+        secondWord = {}
 
-        if firstWord == {}:
-          firstWord = {'i': i, 'score': topKeywords[index]['totalScore']}
-        else:
-          secondWord = firstWord
-          firstWord = {'i': i, 'score': topKeywords[index]['totalScore']}
-          distance = firstWord['i'] - secondWord['i']
+        for i, word in enumerate(words):
+            if word in keywordList:
+                index = keywordList.index(word)
 
-          summ += (firstWord['score'] * secondWord['score']) / (distance ** 2)
+                if firstWord == {}:
+                    firstWord = {'i': i, 'score': topKeywords[index]['totalScore']}
+                else:
+                    secondWord = firstWord
+                    firstWord = {'i': i, 'score': topKeywords[index]['totalScore']}
+                    distance = firstWord['i'] - secondWord['i']
 
+                    summ += (firstWord['score'] * secondWord['score']) / (distance ** 2)
 
-    return (1.0 / k * (k + 1.0)) * summ
+        return (1.0 / k * (k + 1.0)) * summ
