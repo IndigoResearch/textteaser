@@ -58,7 +58,7 @@ class Parser:
         return len(matchedWords) / (len(title) * 1.0)
 
     def splitSentences(self, text):
-        tokenizer = nltk.data.load('file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle')
+        tokenizer = nltk.data.load('file:' + os.path.dirname(os.path.abspath(__file__)).decode('utf-8') + '/trainer/english.pickle')
 
         return tokenizer.tokenize(text)
 
